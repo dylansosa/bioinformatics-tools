@@ -2,24 +2,17 @@
 '''
 Created on Nov 30, 2015
 Author: J. Dylan Sosa
-In collaboration with: Isavannah-chan
+In collaboration with Isavannah Reyes
 Dr. Charles Hauser
 BINF 3325
 '''
 
 import sys, getopt
 import numpy as np
-#import pylab as pl
 import gzip
 import re
 from Bio import ExPASy
 from Bio import SwissProt
-#import matplotlib.pyplot as plt
-#import numpy as np
-#import plotly.plotly as py
-#import progressbar
-#from time import sleep
-#import fish
 from tqdm import tqdm
 
 
@@ -215,19 +208,7 @@ def please_write(dict):
             final_table.write(value[2]+"\n")
     final_table.close()
     #return tableDict
-    print'''
-    The report has been succesfuly saved as <sorted_final.txt>!
-          .-'"""""'-.
-        .'           `.
-       /   .      .    \
-      :                 :
-      |                 |
-      :   \        /    :
-       \   `.____.'    /
-        `.           .'
-          `-._____.-'
-
-'''
+    print "The report has been succesfuly saved as <sorted_final.txt>!"
 
 #def please_sort(tableDict):
     #sortedvalues = sortedsorted(tableDict.values())
