@@ -1,2 +1,2 @@
-# bioinformaticsTools
+# Bioinformatics Tools
 Select programs I've written during undergrad related to bioinformatics
