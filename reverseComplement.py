@@ -1,3 +1,6 @@
+### First version is for standard input
+###
+
 # @author dylan sosa
 # Dr. Ahn
 # BCB 5100
@@ -34,3 +37,19 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+###    
+### Second version is for files
+# @author dylan sosa
+def reverseTranscript(s):
+    complement = { "T": "A", "A": "T", "G": "C", "C": "G" }
+    with open(s,'r') as inf:
+        for line in inf:
+            reverse = line[::-1]
+            revcomplement = ''.join([complement[base] for base in reverse.strip().upper()])
+        print revcomplement
+        return revcomplement
+
+#reverseTranscript('/Users/Dylan/Documents/SLU/Rosalind/rosalind_revc.txt')
+
+reverseTranscript('file.txt')
