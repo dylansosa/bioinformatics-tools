@@ -53,3 +53,19 @@ def reverseTranscript(s):
 #reverseTranscript('/Users/Dylan/Documents/SLU/Rosalind/rosalind_revc.txt')
 
 reverseTranscript('file.txt')
+
+###
+### Third version is with Biopython
+import os, sys, re
+from Bio.Seq import Seq
+
+def main():
+    dna_seq = raw_input('Type DNA seq here: ')
+    dna_seq = Seq(dna_seq)
+    dna_seq = dna_seq.reverse_complement()
+    print 'Reverse complement is: ', dna_seq
+    sys.exit()
+
+if __name__ == '__main__':
+    main()
+
