@@ -34,7 +34,7 @@ def main():
             sys.exit()
     complement(seq)
     sys.exit()
-
+    
 if __name__ == '__main__':
     main()
 
@@ -49,9 +49,7 @@ def reverseTranscript(s):
             revcomplement = ''.join([complement[base] for base in reverse.strip().upper()])
         print revcomplement
         return revcomplement
-
-#reverseTranscript('/Users/Dylan/Documents/SLU/Rosalind/rosalind_revc.txt')
-
+    
 reverseTranscript('file.txt')
 
 ###
