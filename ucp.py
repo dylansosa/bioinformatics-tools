@@ -1,7 +1,7 @@
 #!/usr/bin/env python2.7
 '''
-Created on Nov 30, 2015
-Author: J. Dylan Sosa
+30 November 2015
+@author dylan sosa
 In collaboration with Isavannah Reyes
 Dr. Charles Hauser
 BINF 3325
@@ -23,13 +23,13 @@ def main(argv):
 ###############################################################
 UCP Project, Mus musculus
 --------------------------------------------------------------
-sosa_UCP.py:
+ucp.py:
     A project designed to read microarray and expression value data, and extract values with pvalues < 0.05.
     These will be saved into a dictionary and then used to lookup accession IDs that will later be used to search BioDBnet.
     Finally, creates a sorted dictionary with uniprot IDs, GO terms, and fold change.
 
 How to call:
-    python sosa_UCP.py [-h] -e <expressionfilename> -c <chipfile> -b <bioDBfile>
+    python ucp.py [-h] -e <expressionfilename> -c <chipfile> -b <bioDBfile>
 
 -e  <expressionfile>
 -c  <chipfile>
@@ -45,7 +45,7 @@ How to call:
         opts, args = getopt.getopt(argv,'he:c:b:',['expressionfile=','chipfile=', 'bioDBfile='])
     except getopt.GetoptError:
         print'''How to call:
-            python sosa_UCP.py [-h] -e <expressionfilename> -c <chipfile> -b <bioDBfile>
+            python ucp.py [-h] -e <expressionfilename> -c <chipfile> -b <bioDBfile>
 
         -e  <expressionfile>
         -c  <chipfile>
@@ -55,7 +55,7 @@ How to call:
         if opt=='-h':
             print'''
             How to call:
-                python microArray2UniprotGO.py [-h] -e <expressionfilename> -c <chipfile> -b <bioDBfile>
+                python ucp.py [-h] -e <expressionfilename> -c <chipfile> -b <bioDBfile>
 
             -e  <expressionfile>
             -c  <chipfile>
@@ -185,7 +185,6 @@ def dict_for_table(GOdict, expressiondict):
 
 def writeOut(dict):
     with open('sorted_final.txt', 'w') as final_table:
-    #    final_table.writelines('{}:{}\n'.format(k,v) for k, v in tableDict.items())
         final_table.write('UniprotIds\tFold Change\tGO Terms\tLocations\n')
         for key, value in sorted(tableDict.items(), key=lambda e: e[1][2].lower()):
             final_table.write(key+"\t")
@@ -194,7 +193,6 @@ def writeOut(dict):
             final_table.write(value[1]+"\t")
             final_table.write(value[2]+"\n")
     final_table.close()
-    #return tableDict
     print "The report has been succesfuly saved as <sorted_final.txt>!"
 if __name__ == '__main__':
     arguments = main(sys.argv[1:])
