@@ -14,6 +14,7 @@ import re
 from Bio import ExPASy
 from Bio import SwissProt
 from tqdm import tqdm
+import matplotlib.pyplot as pl
 
 
 def main(argv):
@@ -23,8 +24,8 @@ def main(argv):
 UCP Project, Mus musculus
 --------------------------------------------------------------
 sosa_UCP.py:
-    A project designed to read microarray and expression value data, and extract values with pvalues < 0.05. 
-    These will be saved into a dictionary and then used to lookup accession IDs that will later be used to search BioDBnet. 
+    A project designed to read microarray and expression value data, and extract values with pvalues < 0.05.
+    These will be saved into a dictionary and then used to lookup accession IDs that will later be used to search BioDBnet.
     Finally, creates a sorted dictionary with uniprot IDs, GO terms, and fold change.
 
 How to call:
@@ -131,9 +132,7 @@ def calc_foldchange(WT_value,K5UCP3_value):
 def matchIDs(expressiondict,chipfile):
     readfile = open(chipfile,'r')
     data = readfile.readlines()
-    #import pdb; pdb.set_trace()
     for line in data:
-        #import pdb; pdb.set_trace()
         if line[0].isdigit(): #we have reached the point where we can extract data in the file
             values = line.split()
             id = values[0]
@@ -142,7 +141,6 @@ def matchIDs(expressiondict,chipfile):
                 if accession.startswith('NM'):
                     expressiondict[accession] = expressiondict[id] #NM1234: 7.645452
                     del expressiondict[id]
-    #import pdb; pdb.set_trace()
     for key in expressiondict.keys(): #removes the keys that did not match to a uniprot ID
         if key[0].isdigit():
             del expressiondict[key]
@@ -151,7 +149,6 @@ def matchIDs(expressiondict,chipfile):
 def match_uniprot_IDs(expressiondict,bioDBfile):
     readfile = open(bioDBfile,'r')
     data = readfile.readlines()
-    #import pdb; pdb.set_trace()
     for line in data:
         values = line.split()
         id = values[0]
@@ -163,7 +160,6 @@ def match_uniprot_IDs(expressiondict,bioDBfile):
         if key.startswith('NM'):
             del expressiondict[key]
     return expressiondict
-        #print values
 
 def cross_ref_accessions(accessions):
     GOdict = {}
@@ -171,20 +167,13 @@ def cross_ref_accessions(accessions):
         try:
             handle = ExPASy.get_sprot_raw(id)
             record = SwissProt.read(handle)
-            #print record.description
-            #print record.cross_references
             #all cross-references associated with the record INCLUDING Gene Ontology!
             #parse cross_references
             for ex_db_data in record.cross_references:
-                #print ex_db_data
                 extdb,extid,extdesc = ex_db_data[:3]
                 if extdb=="GO" and extdesc.startswith("C"):
-                    #print extdb,extid,extdesc
-                    #GOdict[id] = [extdb,extid,extdesc]
                     GOdict[id] = [extdb,extid,extdesc]
-            #break
         except:
-            #print "WARNING: Handle %s not found" %id
             pass
     return GOdict
 
@@ -194,11 +183,7 @@ def dict_for_table(GOdict, expressiondict):
             GOdict[id].append(str(expressiondict[id]))
     return GOdict
 
-#def sort_dict_for_table(dict_for_table):
-#    dict_for_table = [(key, value) for value, key in dict_for_table([(value,key) for key, value in dict_for_table.items()])]
-#    return dict_for_table
-
-def please_write(dict):
+def writeOut(dict):
     with open('sorted_final.txt', 'w') as final_table:
     #    final_table.writelines('{}:{}\n'.format(k,v) for k, v in tableDict.items())
         final_table.write('UniprotIds\tFold Change\tGO Terms\tLocations\n')
@@ -211,61 +196,15 @@ def please_write(dict):
     final_table.close()
     #return tableDict
     print "The report has been succesfuly saved as <sorted_final.txt>!"
-
-#def please_sort(tableDict):
-    #sortedvalues = sortedsorted(tableDict.values())
-    #for values in sortedvalues:
-    #    if values in
-#    sorted(tableDict.items(), key=lambda e: e[1][2])
-#    for key, value in sorted(tableDict.items(), key=lambda e: e[1][2].lower()):
-#         print key, value
-    #for key, value in sorted(tableDict.items(), key=lambda (k, v): v[2]):
-    #     print key, value
-#def histo(foldchange):
-#    foldchange_data = foldchange
-#    plt.hist(foldchange_data)
-#    plt.title("Wt and UCP Fold Change Histogram")
-#    plt.xlabel("Value")
-#    plt.ylabel("Frequency")
-
-#fig = plt.gcf()
-
-#plot_url = py.plot_mpl(fig, filename='ucp_histo')
-
 if __name__ == '__main__':
-    #import pdb; pdb.set_trace()
     arguments = main(sys.argv[1:])
     expressionfile = arguments[0]
     chipfile = arguments[1]
     bioDBfile = arguments[2]
     expressiondict = read_expressionfile(expressionfile)
-    #for key,value in sorted(expressiondict.items()):
-    #        print(key,value)
     expressiondict = matchIDs(expressiondict,chipfile)
-    #for key,value in sorted(expressiondict.items()):
-    #        print(key,value)
     expressiondict = match_uniprot_IDs(expressiondict,bioDBfile)
-    #for key,value in sorted(expressiondict.items()):
-    #        print(key)
     cross_ref_accessions(expressiondict.keys())
     GOdict = cross_ref_accessions(expressiondict.keys())
-    #print GOdict
     tableDict = dict_for_table(GOdict, expressiondict)
-    #for key,value in sorted(tableDict.items()):
-        #print(key,value)
-    #final_table = open('final_table.txt','w')
-    #final_table.write(tableDict)
-    #final_table.close()
-    ##please_write(tableDict)
-    #print sorted(tableDict.values())
-    #please_sort(tableDict)
-    please_write(tableDict)
-    #makehisto(tableDict.values()[3])
-###Make Graph
-#d = tableDict
-#X = np.arange(len(d))
-#pl.bar(X, d.values(), align='center', width=0.5)
-#pl.xticks(X, d.keys())
-#ymax = max(d.values()) + 1
-#pl.ylim(0, ymax)
-#pl.show()
+    writeOut(tableDict)
