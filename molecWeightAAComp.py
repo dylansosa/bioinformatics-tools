@@ -17,7 +17,7 @@ def main(argv):
 ###############################################################
 Protein Molecular Weight and Amino Acid Composition Calculator
 --------------------------------------------------------------
-sosaHW01.py:
+molecWeightAAComp.py:
     Reads the protein sequence from a FASTA file
     and prints the sequence and ID information,
     the molecular weight in kDa, and the percent
@@ -25,7 +25,7 @@ sosaHW01.py:
 
 
 How to call:
-    python sosaHW01.py [-h] -i <filename>
+    python molecWeightAAComp.py [-h] -i <filename>
 
 -h    print instructional message
 -i    <inputfile>
