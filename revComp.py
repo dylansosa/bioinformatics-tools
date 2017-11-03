@@ -10,7 +10,7 @@ from Bio import SeqIO
 
 def main(argv):
     """
-    Determines reverse complement of from the following file formats: .txt, .fasta, or input taken from user.
+    Determines reverse complement of seqs from the following file formats: .txt, .fasta, or input taken from user.
     """
     seqFile = ""
     method = ""
