@@ -12,7 +12,7 @@ import numpy as np
 
 def main(argv):
     """
-    A neat python implementation of the Smith-Waterman algorithm for local sequence alignment!
+    A python implementation of the Smith-Waterman algorithm for local sequence alignment.
     """
     sequence_1 = ""
     sequence_2 = ""
@@ -25,7 +25,7 @@ def main(argv):
         print '''
         [Command line execution]
         To execute the script from the command line, follow these guidelines:
-        >lastname_sw.py –s1 seq1.fa –s2 seq2.fa –m blosum62 –g gap_penalty_value –o sw_out.txt
+        >smith-waterman.py –s1 seq1.fa –s2 seq2.fa –m blosum62 –g gap_penalty_value –o sw_out.txt
 
         Where:
         -s1, -s2: 2 sequences to be aligned
@@ -39,7 +39,7 @@ def main(argv):
             print '''
             [Command line execution]
             To execute the script from the command line, follow these guidelines:
-            >lastname_sw.py –s1 seq1.fa –s2 seq2.fa –m blosum62 –g gap_penalty_value –o sw_out.txt
+            >smith-waterman.py –s1 seq1.fa –s2 seq2.fa –m blosum62 –g gap_penalty_value –o sw_out.txt
 
             Where:
             -s1, -s2: 2 sequences to be aligned
@@ -57,11 +57,10 @@ def main(argv):
         elif opt in ("-g","--gap_penalty_value"):
             gap_penalty_value = arg
 
-def cherryBlosumTrees(scoring_matrix):
+def makeBlosum(scoring_matrix):
     """
-    Based on user choice, make blosum dictionary. I say make because the biopython method to call a matrix returns only half the matrix. So here I create the full dictionary for either option.
+    Based on user choice, make blosum dictionary.
     """
-    # look at this beautiful child I love this method so much
     scoring_matrix = scoring_matrix.upper()
     blosum = {}
     if scoring_matrix == ('BLOSUM50' or 'blosum50'):
@@ -81,7 +80,7 @@ def cherryBlosumTrees(scoring_matrix):
 
 def aMatrixNamedAButAlsoOneNamedT(blosum):
     """
-    Take chosen scoring matrix as parameter. Read in each of the two fasta files given by user.  Ask matrix A to kindly hold the blosum score for each i,j based on the two files given. Next stuff A[i][j] with max(diag, upper, and left scores). Have the matrix T hold directions whence each score came.
+    Take chosen scoring matrix as parameter. Read in each of the two fasta files given by user.  Matrix A holds blosum score for each i,j based on the two files given. Fill A[i][j] with max(diag, upper, and left scores). Have the matrix T hold directions whence each score came.
     """
     with open(sequence_1,'r') as fasta_seq1:
         for line in fasta_seq1.readlines():
@@ -133,8 +132,7 @@ def aMatrixNamedAButAlsoOneNamedT(blosum):
 
 def getMax(A,T,m,n,seq1,seq2):
         """
-        I know this isn't computationally efficient, but it makes sense to me! I originally did include this in the above method, but that was a lot to read and it got confusing after a while!!!
-        Move through the matrix A and find the local maximum score. Return that and the coordinates. Give rise to a matrix G which will in time will hold optimal traceback path.
+        Move through the matrix A and find the local maximum score. Return that and the coordinates.
         Conduct alignment of the given seqs.
         """
         local_max = 0
@@ -178,7 +176,6 @@ def getMax(A,T,m,n,seq1,seq2):
         rev_seq1 = alignment1[::-1]
         rev_seq2 = alignment2[::-1]
 
-
         print A
         print 'Local max is:',local_max,'at',local_max_coord,'\n\n','Aligned sequences:'
         print rev_seq1
@@ -188,7 +185,6 @@ def getMax(A,T,m,n,seq1,seq2):
 
 def prettify(A,T,m,n,G,LMC):
     """
-    Unicode can't conquer me!
     Use enumerated values to replace the locations in the matrix G with arrows and others!
     """
     UP_ARROW = u'\u21E7'
@@ -216,7 +212,7 @@ def prettify(A,T,m,n,G,LMC):
     for l in symbolMatrix:
         print l
 
-def thatsAllSheWrote(out,score,RS1,RS2):
+def writeOut(out,score,RS1,RS2):
     with open(out, 'w') as outfile:
         outfile.write(RS1)
         outfile.write('\n')
@@ -235,7 +231,7 @@ if __name__ == "__main__":
     print 'First FASTA file is: {0}'.format(sequence_1)
     print 'Second FASTA file is: {0}'.format(sequence_2)
     print 'Scoring matrix is: {0}'.format(scoring_matrix)
-    A,T,m,n,seq1,seq2 = aMatrixNamedAButAlsoOneNamedT(cherryBlosumTrees(scoring_matrix))
+    A,T,m,n,seq1,seq2 = aMatrixNamedAButAlsoOneNamedT(makeBlosum(scoring_matrix))
     A,T,m,n,G,LMC,AS,RS1,RS2 = getMax(A,T,m,n,seq1,seq2)
     prettify(A,T,m,n,G,LMC)
-    thatsAllSheWrote(output_file,AS,RS1,RS2)
+    writeOut(output_file,AS,RS1,RS2)
