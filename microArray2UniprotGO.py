@@ -23,7 +23,9 @@ def main(argv):
 UCP Project, Mus musculus
 --------------------------------------------------------------
 sosa_UCP.py:
-    A project designed to read microarray and expression value data, and extract values with pvalues < 0.05. These will be saved into a dictionary and then used to lookup accession IDs that will later be used to search BioDBnet. Finally, creates a sorted dictionary with uniprot IDs, GO terms, and fold change.
+    A project designed to read microarray and expression value data, and extract values with pvalues < 0.05. 
+    These will be saved into a dictionary and then used to lookup accession IDs that will later be used to search BioDBnet. 
+    Finally, creates a sorted dictionary with uniprot IDs, GO terms, and fold change.
 
 How to call:
     python sosa_UCP.py [-h] -e <expressionfilename> -c <chipfile> -b <bioDBfile>
@@ -52,7 +54,7 @@ How to call:
         if opt=='-h':
             print'''
             How to call:
-                python sosa_UCP.py [-h] -e <expressionfilename> -c <chipfile> -b <bioDBfile>
+                python microArray2UniprotGO.py [-h] -e <expressionfilename> -c <chipfile> -b <bioDBfile>
 
             -e  <expressionfile>
             -c  <chipfile>
