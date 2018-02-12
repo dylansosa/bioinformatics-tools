@@ -1,7 +1,4 @@
 import os, re
-# wd = '/Users/dylansosa/Documents/SLU/Zhang/Winter-Break-paper_tree/ConvertToExcel/'
-# os.chdir(wd)
-# un-comment the above lines only if you are not using this script via BASH and want to test in an editor. 
 
 # usage:
 # python convert2csv.py > [output.csv]
