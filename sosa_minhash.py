@@ -39,8 +39,7 @@ def generateHashFamily():
 def minhash():
     """
     Python implementation of the minhash algorithm to measure string similarity.
-    Also calculates jaccard similarity index to compare with minhash similarity.
-
+    Compares Jaccard and minhash similarities.
     """
     signatureVector1 = np.full((signatureSize,1), float("inf"))
     signatureVector2 = np.full((signatureSize,1), float("inf"))
