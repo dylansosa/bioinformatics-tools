@@ -36,11 +36,13 @@ def generateHashFamily():
         permutations.append(hashFunctionValues)
     return permutations
 
-def minhash():
+def minhash(A,B):
     """
     Python implementation of the minhash algorithm to measure string similarity.
-    Compares Jaccard and minhash similarities.
+    Compares Jaccard and minhash similaritieA.
     """
+    A = [ hash(x) for x in A ]
+    B = [ hash(x) for x in B ]
     signatureVector1 = np.full((signatureSize,1), float("inf"))
     signatureVector2 = np.full((signatureSize,1), float("inf"))
     for i, hashValues in enumerate(generateHashFamily()):
@@ -58,20 +60,28 @@ def minhash():
     signatureMatrix = pd.DataFrame(matrix, columns = ['set 1', 'set 2'])
     matchingValues = signatureMatrix.shape[0]*2 - np.unique(signatureMatrix).shape[0]
     print(signatureMatrix)
-    print("Jaccard similarity is :", jaccardSimilarity(A,B))
-    print("E value of minhash similarity is (assuming no collisions):", expected())
     print("Number of signature components is:", signatureSize)
-    print("Minhash similarity is :", matchingValues / signatureSize)
+    print("E value of minhash similarity (assuming no collisions) is:", expected())
+    print("Jaccard similarity is:", jaccardSimilarity(A,B))
+    print("Minhash similarity is:", matchingValues / signatureSize)
 
-A = set(['pero','jo','vull','correr','mon','vull','coneixer','gent'])
-B = set(['jo','vull','anar','amb','el','vent','vull','coneixer','altres','terres'])
-A = [ hash(x) for x in A ]
-B = [ hash(x) for x in B ]
+# A = set(['pero','jo','vull','correr','mon','jo','vull','anar','amb','el','vent'])
+# B = set(['vull','coneixer','altres','terres','vull','coneixer','gent','com','tu'])
 
-# A = [ hash(x) for x in C ]
-# B = [ hash(x) for x in D ]
-# C = {31,3,22,6,15,11}
-# D = {15,30,7,11,28,3,17}
+A = {31,3,22,6,15,11}
+B = {15,30,7,11,28,3,17}
+
+# A = ""
+# inf = open('elsamics','r')
+# for line in inf:
+    # A += line
+# A = A.strip()
+# A = A.split()
+# B = ""
+# inf2 = open('elscatarres','r')
+# for line in inf2:
+    # B += line
+# B = B.strip().split()
 
 signatureSize = 10
-minhash()
+minhash(A,B)
