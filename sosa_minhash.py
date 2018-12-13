@@ -4,7 +4,6 @@
 # Algorithms in Computational Biology FA18
 # December 11, 2018
 ###########################################
-import sys, getopt
 import math as m
 import numpy as np
 import pandas as pd
