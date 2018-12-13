@@ -27,9 +27,16 @@ def hashFunction(a, b, x, c = 402653189):
     return ((a*x)+b)%c
 
 def expected():
+    """
+    Returns expected minhash similarity value.
+    """
     return signatureSize*jaccardSimilarity(A,B)
 
 def generateHashFamily():
+    """
+    Randomly permute a set of values to use in a hash function.
+    Saves these into a list to ensure the same values are used for both sets.
+    """
     permutations = []
     for i in range(signatureSize):
         hashFunctionValues = (random.randint(0, (2**32)-1),random.randint(0, (2**32)-1))
@@ -66,7 +73,7 @@ def minhash(A,B):
     print("Minhash similarity is:", matchingValues / signatureSize)
 
 # A = set(['pero','jo','vull','correr','mon','jo','vull','anar','amb','el','vent'])
-# B = set(['vull','coneixer','altres','terres','vull','coneixer','gent','com','tu'])
+# B = set(['vull','coneixer','altres','terres','vull','coneixer','gent'])
 
 A = {31,3,22,6,15,11}
 B = {15,30,7,11,28,3,17}
