@@ -19,6 +19,5 @@ paste -d '      ' geneList expression* > tmp_Dmel_expression.txt
 
 # add and clean up header from second input file
 sed "1 s/^/$header\n/" tmp_Dmel_expression.txt > header_Dmel_expr.txt
-
 sed 's/SYMBOL   //g' header_Dmel_expr.txt > header_tmp_Dmel_expr.txt
 sed 's/FBtrID   //g' header_tmp_Dmel_expr.txt > intermediate_Dmel_expression.txt
