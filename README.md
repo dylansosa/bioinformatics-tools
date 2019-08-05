@@ -1,2 +1,2 @@
 # Bioinformatics Tools
-Bioinformatics related programs I've written for classes or ny research
+Scripts I have written either for class or to help me in someway with my research
