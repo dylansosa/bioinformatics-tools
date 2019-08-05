@@ -3,7 +3,7 @@
 # adjust for loop range according to number of columns in data
 # must have input file sorted on gene ID, not symbol
 
-# command: condenseTranscripts2GeneExpression.sh
+# command: ./condenseTranscripts2GeneExpression.sh
 header="$(cat GSE99574_HiSAT2_dmel.transcript_level_TPM.FB.txt | head -n1)"
 
 # if transcript expression values correspond to the same gene, sum and collapse into one row
