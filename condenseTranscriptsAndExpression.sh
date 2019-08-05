@@ -1,6 +1,6 @@
 #!/bin/bash
 # need data file with header and one without. Use file without header as input
-# adjust for loop range accoring to number of columns in data
+# adjust for loop range according to number of columns in data
 # must have input file sorted on gene ID, not symbol
 
 # command: condenseTranscripts2GeneExpression.sh
