@@ -1,2 +1,2 @@
 # Bioinformatics Tools
-Scripts I have written either for class or to help me in someway with my research
+Scripts I have written to aid me in my research
