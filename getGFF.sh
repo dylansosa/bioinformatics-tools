@@ -1,0 +1,1 @@
+cat $1 | egrep 'GCA' | cut -f 1 -d '	'| while read -r acc ; do esearch -db assembly -query $acc </dev/null | esummary | xtract -pattern DocumentSummary -element Taxid,Organism,AssemblyAccession,FtpPath_RefSeq | cut -d '	' -f 4 | sed 's:\(GCF_[0-9]*\.[0-9]_[A-Z]*[0-9].*\):\1\/\1_genomic.gff.gz:I'| xargs wget ; done
