@@ -1,0 +1,2 @@
+./getIsotypeFASTA.sh
+./getIsotypeAlignments.sh
