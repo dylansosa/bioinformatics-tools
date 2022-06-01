@@ -1,0 +1,2 @@
+./getIsotypeFASTAnonpacbio.sh
+./getIsotypeAlignments.sh
