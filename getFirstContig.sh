@@ -1,0 +1,1 @@
+for f in  ../non-pacbio/*.fai ; do  head -n1 $f | cut -f 1,2 | awk '{print $0,$3= 1}' | sed s'/   */    /' | sed s'/ /  /' | sed s'/^   //g' | egrep -v = | awk '{print $1,$3,$2}' | egrep -v ^1 | sed s'/ /    /g' > ../non-pacbio/$f.firstContig.gff ; done
